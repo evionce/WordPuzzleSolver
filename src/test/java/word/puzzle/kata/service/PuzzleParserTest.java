@@ -4,6 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PuzzleParserTest {
@@ -18,7 +22,14 @@ public class PuzzleParserTest {
     }
 
     @Test
-    public void whenPuzzleFilePathIsPassedFileExistsInMemory(){
+    public void whenPuzzleFilePathIsPassedFileExistsInMemory() throws Exception{
         assertThat(puzzleParser.readPuzzleFile().exists());
+    }
+
+    @Test
+    public void whenPuzzleIsReadWordsToFindAreAvailable()throws Exception{
+        puzzleParser.readPuzzleFile();
+        List<String> wordsToFind =(List)ReflectionTestUtils.getField(puzzleParser,"wordsToFind");
+        assertThat(Arrays.asList(wordsToFind).contains("BONES"));
     }
 }
