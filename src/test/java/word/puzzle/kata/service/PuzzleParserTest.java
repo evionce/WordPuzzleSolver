@@ -2,6 +2,7 @@ package word.puzzle.kata.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,8 @@ public class PuzzleParserTest {
     public void setup() {
         puzzleParser = new PuzzleParser();
         wordsToFind = new ArrayList<>();
+        ReflectionTestUtils.setField(puzzleParser, "puzzleSize", 2);
+        ReflectionTestUtils.setField(puzzleParser, "puzzle", new String[3][3]);
         setField(puzzleParser, "puzzlePath", System.getProperty("user.dir"));
         setField(puzzleParser, "puzzleFileName", "/puzzle.txt");
     }
@@ -45,13 +48,12 @@ public class PuzzleParserTest {
 
     @Test
     public void whenArrayIsPassed2DArrayPreservesLineIndex(){
-        String[] testLine = new String[]{"E","V","A","N"};
-        PuzzleSolver solver = puzzleParser.build2DPuzzleArray(0, testLine);
+        String[] testLine = new String[]{"J","R","E"};
+        PuzzleSolver solver = puzzleParser.build2DPuzzleArray(2, testLine);
         String[][] puzzle = (String[][]) getField(solver,"puzzle");
-        assertEquals("E",puzzle[0][0]);
-        assertEquals("V",puzzle[0][1]);
-        assertEquals("A",puzzle[0][2]);
-        assertEquals("N",puzzle[0][3]);
+        assertEquals("J",puzzle[2][0]);
+        assertEquals("R",puzzle[2][1]);
+        assertEquals("E",puzzle[2][2]);
     }
 
     @Test
@@ -64,5 +66,15 @@ public class PuzzleParserTest {
         assertEquals("D",puzzle[2][1]);
         assertEquals("K",puzzle[2][2]);
         assertEquals("JRE", solver.getWordsToFind().get(0));
+    }
+
+    @Test
+    public void whenPuzzleFileIsParsedClassIsCreatedWithItsContents() throws Exception{
+        puzzleParser.readPuzzleFile();
+        PuzzleSolver solver = (PuzzleSolver) getField(puzzleParser, "solver");
+        assertEquals("U", solver.getPuzzle()[0][0]);
+        assertEquals("G", solver.getPuzzle()[1][14]);
+        assertEquals("B", solver.getPuzzle()[6][0]);
+        assertEquals("B", solver.getPuzzle()[14][14]);
     }
 }
