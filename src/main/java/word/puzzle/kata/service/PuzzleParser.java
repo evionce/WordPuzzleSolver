@@ -1,6 +1,7 @@
 package word.puzzle.kata.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ public class PuzzleParser {
     @Value("${puzzle.file.name}") private String puzzleFileName;
 
     List<String> wordsToFind = new ArrayList<>();
+    public int puzzleBodyLineCount;
 
     public File readPuzzleFile() throws IOException {
         File puzzle = new File(puzzlePath + puzzleFileName);
@@ -23,7 +25,15 @@ public class PuzzleParser {
         return puzzle;
     }
 
-    public String[] parseWordPuzzleLine(String testString) {
-        return testString.split(",");
+    public String[] parseWordPuzzleLine(String puzzleBodyLine) {
+        return puzzleBodyLine.split(",");
+    }
+
+    public String[][] build2DPuzzleArray(int rowInPuzzle,String[] lineElements) {
+        String[][] puzzleLineWithColumnIndex = new String[rowInPuzzle+1][lineElements.length];
+        for(int x = 0; x <lineElements.length; ++x){
+            puzzleLineWithColumnIndex[rowInPuzzle][x] = lineElements[x];
+        }
+        return puzzleLineWithColumnIndex;
     }
 }

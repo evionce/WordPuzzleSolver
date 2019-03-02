@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,9 +34,19 @@ public class PuzzleParserTest {
     }
 
     @Test
-    public void whenStringDelimitedWithCommaIsPassedArrayOfElementsIsReturned() throws Exception {
+    public void whenStringDelimitedWithCommaIsPassedArrayOfElementsIsReturned(){
         String testString = "H,E,L,O,W,R,L,D";
         String[] testPuzzleLines = puzzleParser.parseWordPuzzleLine(testString);
         assertEquals(8, testPuzzleLines.length);
+    }
+
+    @Test
+    public void whenArrayIsPassed2DArrayPreservesLineIndex(){
+        String[] testLine = new String[]{"E","V","A","N"};
+        String[][] puzzle = puzzleParser.build2DPuzzleArray(0, testLine);
+        assertEquals("E",puzzle[0][0]);
+        assertEquals("V",puzzle[0][1]);
+        assertEquals("A",puzzle[0][2]);
+        assertEquals("N",puzzle[0][3]);
     }
 }
