@@ -42,7 +42,7 @@ public class PuzzleParserTest {
     @Test
     public void whenStringDelimitedWithCommaIsPassedArrayOfElementsIsReturned(){
         String testString = "H,E,L,O,W,R,L,D";
-        String[] testPuzzleLines = puzzleParser.parseWordPuzzleLine(testString);
+        String[] testPuzzleLines = puzzleParser.parsePuzzleLine(testString);
         assertEquals(8, testPuzzleLines.length);
     }
 
