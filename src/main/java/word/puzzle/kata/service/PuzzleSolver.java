@@ -11,37 +11,45 @@ public class PuzzleSolver {
     @Getter private String[][] puzzle;
     @Getter List<String> wordsToFind;
 
-    public String solvePuzzle() {
+    public String solvePuzzle(){
+        String results = "";
+        for(String word: wordsToFind){
+            results += (solvePuzzleAgainstWord(word)+ "\n");
+        }
+        return results.substring(0, results.lastIndexOf('\n'));
+    }
+
+    public String solvePuzzleAgainstWord(String word) {
         for(int line = 0; line < puzzle.length; ++line){
             for(int element = 0; element < puzzle[line].length; ++element){
-                if(!checkIfEquals(line, element).equals("")){
-                    return checkIfEquals(line, element);
+                if(!checkIfEquals(line, element,word).equals("")){
+                    return checkIfEquals(line, element,word);
                 }
             }
         }
         return "";
     }
 
-    private String checkIfEquals(int line, int element) {
+    private String checkIfEquals(int line, int element, String word) {
         String potentialMatchForward = "";
         String potentialMatchBackwards = "";
-        for(int letters = 0; letters < wordsToFind.get(0).length(); ++letters){
-            if(matchIsWithinBoundsForward(line,element)){
+        for(int letters = 0; letters < word.length(); ++letters){
+            if(matchIsWithinBoundsForward(line,element,word)){
                 int targetForward = letters + element;
                 potentialMatchForward += (puzzle[line][targetForward]);
-            }if(matchIsWithinBoundsBackwards(element)){
+            }if(matchIsWithinBoundsBackwards(element,word)){
                 int targetBack = element - letters;
                 potentialMatchBackwards += (puzzle[line][targetBack]);
             }
         }
-        if(potentialMatchForward.equals(wordsToFind.get(0)) || potentialMatchBackwards.equals(wordsToFind.get(0))) {
-            return wordsToFind.get(0);
+        if(potentialMatchForward.equals(word) || potentialMatchBackwards.equals(word)) {
+            return word;
         }
         return "";
     }
 
-    public boolean matchIsWithinBoundsForward(int line, int element) {
-        int wordLength = wordsToFind.get(0).length() -1;
+    public boolean matchIsWithinBoundsForward(int line, int element,String word) {
+        int wordLength = word.length() -1;
         int lengthOfPuzzle = puzzle[line].length;
         if ((element + wordLength) < lengthOfPuzzle) {
             return true;
@@ -50,8 +58,8 @@ public class PuzzleSolver {
         }
     }
 
-    public boolean matchIsWithinBoundsBackwards(int element){
-        int wordLength = wordsToFind.get(0).length() -1;
+    public boolean matchIsWithinBoundsBackwards(int element,String word){
+        int wordLength = word.length() -1;
         int potentialIndex = element - wordLength;
         if (0 <= potentialIndex) {
             return true;
