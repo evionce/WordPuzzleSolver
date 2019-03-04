@@ -31,18 +31,20 @@ public class PuzzleSolver {
     }
 
     private String checkIfEquals(int line, int element, String word) {
-        String potentialMatchForward = "";
-        String potentialMatchBackwards = "";
+        StringBuilder potentialMatchBackwards = new StringBuilder();
+        StringBuilder potentialMatchForward = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
                 int targetForward = letters + element;
-                potentialMatchForward += (puzzle[line][targetForward]);
-            }if(matchIsWithinBoundsBackwards(element,word)){
+                potentialMatchForward.append(puzzle[line][targetForward]);
+            }
+            if(matchIsWithinBoundsBackwards(element,word)){
                 int targetBack = element - letters;
-                potentialMatchBackwards += (puzzle[line][targetBack]);
+                potentialMatchBackwards.append(puzzle[line][targetBack]);
             }
         }
-        if(potentialMatchForward.equals(word) || potentialMatchBackwards.equals(word)) {
+        if(potentialMatchForward.toString().equals(word)
+                || potentialMatchBackwards.toString().equals(word)) {
             return word;
         }
         return "";
