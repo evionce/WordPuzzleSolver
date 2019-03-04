@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PuzzleSolverTest {
 
@@ -14,7 +15,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HI");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","H","I"},{},{}},wordsToFind);
-        assertEquals("HI",solver.solvePuzzleAgainstWord("HI"));
+        assertTrue(solver.solvePuzzle().contains("HI"));
     }
 
     @Test
@@ -22,7 +23,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HI");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X"},{},{}},wordsToFind);
-        assertEquals("HI",solver.solvePuzzleAgainstWord("HI"));
+        assertTrue(solver.solvePuzzle().contains("HI"));
     }
 
     @Test
@@ -30,7 +31,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HELOWRLD");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","E","L","O","W","R","L","D"},{},{}},wordsToFind);
-        assertEquals("HELOWRLD",solver.solvePuzzleAgainstWord("HELOWRLD"));
+        assertTrue(solver.solvePuzzle().contains("HELOWRLD"));
     }
 
     @Test
@@ -38,7 +39,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","A","V","A","J"},{},{}},wordsToFind);
-        assertEquals("JAVA",solver.solvePuzzleAgainstWord("JAVA"));
+        assertTrue(solver.solvePuzzle().contains("JAVA"));
     }
 
     @Test
@@ -47,6 +48,15 @@ public class PuzzleSolverTest {
         wordsToFind.add("HI");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","J","A","V","A"},{},{}},wordsToFind);
-        assertEquals("HI"+"\n"+"JAVA",solver.solvePuzzle());
+        assertTrue(solver.solvePuzzle().contains("HI"));
+    }
+
+    @Test
+    public void whenPuzzleWithSameWordIndexesInPrintLineWillSignifyTherePosition(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("HI");
+        wordsToFind.add("JAVA");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","J","A","V","A"},{},{}},wordsToFind);
+        assertEquals("HI: (0,0),(0,1)"+"\n"+"JAVA: (0,4),(0,5),(0,6),(0,7)",solver.solvePuzzle());
     }
 }
