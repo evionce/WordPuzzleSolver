@@ -13,8 +13,14 @@ public class PuzzleSolver {
 
     public String solvePuzzle() {
         for(int line = 0; line < puzzle.length; ++line){
-            if(wordsToFind.get(0).startsWith(puzzle[0][line])){
-                return wordsToFind.get(0);
+            boolean isFirstElement = true;
+            for(int element = 0; element < puzzle[line].length; ++element){
+                if(wordsToFind.get(0).equals(puzzle[line][element] + puzzle[line][element+1])){
+                    return wordsToFind.get(0);
+                }else if(!isFirstElement && wordsToFind.get(0).equals(puzzle[line][element] +puzzle[line][element-1])){
+                    return wordsToFind.get(0);
+                }
+                isFirstElement = false;
             }
         }
         return "";
