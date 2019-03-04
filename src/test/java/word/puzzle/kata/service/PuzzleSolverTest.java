@@ -24,4 +24,13 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X"},{},{}},wordsToFind);
         assertEquals("HI",solver.solvePuzzle());
     }
+
+    @Test
+    public void whenPuzzleIsReadWithLongerTargetWordTargetIsReturn(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("HELOWRLD");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","E","L","O","W","R","L","D"},{},{}},wordsToFind);
+        assertEquals("HELOWRLD",solver.solvePuzzle());
+
+    }
 }
