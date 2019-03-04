@@ -31,6 +31,13 @@ public class PuzzleSolverTest {
         wordsToFind.add("HELOWRLD");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","E","L","O","W","R","L","D"},{},{}},wordsToFind);
         assertEquals("HELOWRLD",solver.solvePuzzle());
+    }
 
+    @Test
+    public void whenPuzzleIsReadWithLongerTargetInReverseWordTargetIsReturn(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("JAVA");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","A","V","A","J"},{},{}},wordsToFind);
+        assertEquals("JAVA",solver.solvePuzzle());
     }
 }
