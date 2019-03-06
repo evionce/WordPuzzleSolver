@@ -80,4 +80,18 @@ public class PuzzleSolverTest {
                 +"JAVA: (0,0),(1,0),(2,0),(3,0)"+"\n"
                 +"KATA: (3,3),(3,2),(3,1),(3,0)",solver.solvePuzzle());
     }
+
+    @Test
+    public void whenPuzzleWithDiagonalDownwardPrintLineWillSignifyTherePosition(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("ABLE");
+        wordsToFind.add("JAVA");
+        wordsToFind.add("KATA");
+        wordsToFind.add("JBAK");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"J","A","V","A"},{"X","B","X","T"},{"X","L","A","A"},{"X","E","X","K"}},wordsToFind);
+        assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"
+                +"JAVA: (0,0),(1,0),(2,0),(3,0)"+"\n"
+                +"KATA: (3,3),(3,2),(3,1),(3,0)"+"\n"
+                +"JBAK: (0,0),(1,1),(2,2),(3,3)",solver.solvePuzzle());
+    }
 }

@@ -40,6 +40,8 @@ public class PuzzleSolver {
         StringBuilder potentialMatchDownwardsPositions = new StringBuilder();
         StringBuilder potentialMatchUpwards = new StringBuilder();
         StringBuilder potentialMatchUpwardsPositions = new StringBuilder();
+        StringBuilder potentialMatchDownDiagonal = new StringBuilder();
+        StringBuilder potentialMatchDownDiagonalPositions = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
                 potentialMatchForwardPositions.append("(").append(letters + element).append(",").append(line).append(")").append(",");
@@ -57,6 +59,10 @@ public class PuzzleSolver {
                 potentialMatchUpwardsPositions.append("(").append(element).append(",").append(line - letters).append(")").append(",");
                 potentialMatchUpwards.append(puzzle[line - letters][element]);
             }
+            if(matchIsWithinBoundsDownwards(line, word) && matchIsWithinBoundsForward(line, element,word )){
+                potentialMatchDownDiagonalPositions.append("(").append(line + letters).append(",").append(letters + element).append(")").append(",");
+                potentialMatchDownDiagonal.append(puzzle[line + letters][letters + element]);
+            }
         }
         if(potentialMatchForward.toString().equals(word)){
             return formatOutput(potentialMatchForward, potentialMatchForwardPositions);
@@ -70,6 +76,9 @@ public class PuzzleSolver {
         if(potentialMatchUpwards.toString().equals(word)){
             return formatOutput(potentialMatchUpwards, potentialMatchUpwardsPositions);
         }
+        if(potentialMatchDownDiagonal.toString().equals(word)){
+            return  formatOutput(potentialMatchDownDiagonal, potentialMatchDownDiagonalPositions);
+        }
         return "";
     }
 
@@ -81,11 +90,7 @@ public class PuzzleSolver {
     private boolean matchIsWithinBoundsUpwards(int line, String word) {
         int wordLength = word.length() - 1;
         int potentialUp = line - wordLength;
-        if (0 <= potentialUp) {
-            return true;
-        } else {
-            return false;
-        }
+        return isIndexNegative(potentialUp);
     }
 
     private boolean matchIsWithinBoundsForward(int line, int element,String word) {
@@ -101,13 +106,16 @@ public class PuzzleSolver {
     private boolean matchIsWithinBoundsBackwards(int element,String word){
         int wordLength = word.length() -1;
         int potentialIndex = element - wordLength;
+        return isIndexNegative(potentialIndex);
+    }
+
+    private boolean isIndexNegative(int potentialIndex) {
         if (0 <= potentialIndex) {
             return true;
         } else {
             return false;
         }
     }
-
 
     private boolean matchIsWithinBoundsDownwards(int line, String word) {
         int wordLength = word.length();
