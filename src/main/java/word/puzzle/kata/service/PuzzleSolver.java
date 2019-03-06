@@ -42,6 +42,8 @@ public class PuzzleSolver {
         StringBuilder potentialMatchUpwardsPositions = new StringBuilder();
         StringBuilder potentialMatchDownDiagonal = new StringBuilder();
         StringBuilder potentialMatchDownDiagonalPositions = new StringBuilder();
+        StringBuilder potentialMatchUpDiagonal = new StringBuilder();
+        StringBuilder potentialMatchUpDiagonalPositions = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
                 potentialMatchForwardPositions.append("(").append(letters + element).append(",").append(line).append(")").append(",");
@@ -63,6 +65,10 @@ public class PuzzleSolver {
                 potentialMatchDownDiagonalPositions.append("(").append(line + letters).append(",").append(letters + element).append(")").append(",");
                 potentialMatchDownDiagonal.append(puzzle[line + letters][letters + element]);
             }
+            if(matchIsWithinBoundsUpwards(line, word) && matchIsWithinBoundsBackwards(element,word)){
+                potentialMatchUpDiagonalPositions.append("(").append(line - letters).append(",").append(element - letters).append(")").append(",");
+                potentialMatchUpDiagonal.append(puzzle[line - letters][element - letters]);
+            }
         }
         if(potentialMatchForward.toString().equals(word)){
             return formatOutput(potentialMatchForward, potentialMatchForwardPositions);
@@ -78,6 +84,9 @@ public class PuzzleSolver {
         }
         if(potentialMatchDownDiagonal.toString().equals(word)){
             return  formatOutput(potentialMatchDownDiagonal, potentialMatchDownDiagonalPositions);
+        }
+        if(potentialMatchUpDiagonal.toString().equals(word)){
+            return  formatOutput(potentialMatchUpDiagonal, potentialMatchUpDiagonalPositions);
         }
         return "";
     }

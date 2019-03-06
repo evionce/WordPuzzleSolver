@@ -94,4 +94,12 @@ public class PuzzleSolverTest {
                 +"KATA: (3,3),(3,2),(3,1),(3,0)"+"\n"
                 +"JBAK: (0,0),(1,1),(2,2),(3,3)",solver.solvePuzzle());
     }
+
+    @Test
+    public void whenPuzzleWithDiagonalUpwardPrintLineWillSignifyTherePosition(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("KATA");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"A","X","X","X"},{"X","T","X","X"},{"X","X","A","X"},{"X","X","X","K"}},wordsToFind);
+        assertEquals("KATA: (3,3),(2,2),(1,1),(0,0)",solver.solvePuzzle());
+    }
 }
