@@ -38,6 +38,8 @@ public class PuzzleSolver {
         StringBuilder potentialMatchForwardPositions = new StringBuilder();
         StringBuilder potentialMatchDownwards = new StringBuilder();
         StringBuilder potentialMatchDownwardsPositions = new StringBuilder();
+        StringBuilder potentialMatchUpwards = new StringBuilder();
+        StringBuilder potentialMatchUpwardsPositions = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
                 potentialMatchForwardPositions.append("(").append(letters + element).append(",").append(line).append(")").append(",");
@@ -51,20 +53,39 @@ public class PuzzleSolver {
                 potentialMatchDownwardsPositions.append("(").append(element).append(",").append(line + letters).append(")").append(",");
                 potentialMatchDownwards.append(puzzle[line + letters][element]);
             }
+            if(matchIsWithinBoundsUpwards(line,word)){
+                potentialMatchUpwardsPositions.append("(").append(element).append(",").append(line - letters).append(")").append(",");
+                potentialMatchUpwards.append(puzzle[line - letters][element]);
+            }
         }
         if(potentialMatchForward.toString().equals(word)){
-            String match = potentialMatchForward.append(": ").append(potentialMatchForwardPositions).toString();
-            return match.substring(0, match.length() -1);
+            return formatOutput(potentialMatchForward, potentialMatchForwardPositions);
         }
         if(potentialMatchBackwards.toString().equals(word)){
-            String backwardMatch = potentialMatchBackwards.append(": ").append(potentialMatchBackwardsPositions).toString();
-            return backwardMatch.substring(0, backwardMatch.length() -1);
+            return formatOutput(potentialMatchBackwards, potentialMatchBackwardsPositions);
         }
         if(potentialMatchDownwards.toString().equals(word)){
-            String match = potentialMatchDownwards.append(": ").append(potentialMatchDownwardsPositions).toString();
-            return match.substring(0, match.length() -1);
+            return formatOutput(potentialMatchDownwards, potentialMatchDownwardsPositions);
+        }
+        if(potentialMatchUpwards.toString().equals(word)){
+            return formatOutput(potentialMatchUpwards, potentialMatchUpwardsPositions);
         }
         return "";
+    }
+
+    private String formatOutput(StringBuilder potentialMatchForward, StringBuilder potentialMatchForwardPositions) {
+        String match = potentialMatchForward.append(": ").append(potentialMatchForwardPositions).toString();
+        return match.substring(0, match.length() - 1);
+    }
+
+    private boolean matchIsWithinBoundsUpwards(int line, String word) {
+        int wordLength = word.length() - 1;
+        int potentialUp = line - wordLength;
+        if (0 <= potentialUp) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean matchIsWithinBoundsForward(int line, int element,String word) {
@@ -89,9 +110,12 @@ public class PuzzleSolver {
 
 
     private boolean matchIsWithinBoundsDownwards(int line, String word) {
-        if(word.length() > puzzle.length + line){
+        int wordLength = word.length();
+        int potentialUp = line + puzzle.length;
+        if(wordLength >= potentialUp){
+            return true;
+        }else {
             return false;
         }
-        return true;
     }
 }
