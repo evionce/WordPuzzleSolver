@@ -32,63 +32,51 @@ public class PuzzleSolver {
     }
 
     private String checkIfEquals(int line, int element, String word) {
-        StringBuilder potentialMatchBackwards = new StringBuilder();
-        StringBuilder potentialMatchBackwardsPositions = new StringBuilder();
-        StringBuilder potentialMatchForward = new StringBuilder();
-        StringBuilder potentialMatchForwardPositions = new StringBuilder();
-        StringBuilder potentialMatchDownwards = new StringBuilder();
-        StringBuilder potentialMatchDownwardsPositions = new StringBuilder();
-        StringBuilder potentialMatchUpwards = new StringBuilder();
-        StringBuilder potentialMatchUpwardsPositions = new StringBuilder();
-        StringBuilder potentialMatchDownDiagonal = new StringBuilder();
-        StringBuilder potentialMatchDownDiagonalPositions = new StringBuilder();
-        StringBuilder potentialMatchUpDiagonal = new StringBuilder();
-        StringBuilder potentialMatchUpDiagonalPositions = new StringBuilder();
+        StringBuilder[] potentialMatches = initializedIndexesForAllPossibleMatches();
         for(int letters = 0; letters < word.length(); ++letters){
-            if(matchIsWithinBoundsForward(line,element,word)){
-                potentialMatchForwardPositions.append("(").append(letters + element).append(",").append(line).append(")").append(",");
-                potentialMatchForward.append(puzzle[line][letters + element]);
+            boolean canBeForward = matchIsWithinBoundsForward(line,element,word);
+            boolean canBeBackwards = matchIsWithinBoundsBackwards(element,word);
+            boolean canBeDownwards = matchIsWithinBoundsDownwards(line,word);
+            boolean canBeUpwards = matchIsWithinBoundsUpwards(line,word);
+            if(canBeForward){
+                potentialMatches[1].append("(").append(letters + element).append(",").append(line).append(")").append(",");
+                potentialMatches[0].append(puzzle[line][letters + element]);
             }
-            if(matchIsWithinBoundsBackwards(element,word)){
-                potentialMatchBackwardsPositions.append("(").append(element - letters).append(",").append(line).append(")").append(",");
-                potentialMatchBackwards.append(puzzle[line][element - letters]);
+            if(canBeBackwards){
+                potentialMatches[3].append("(").append(element - letters).append(",").append(line).append(")").append(",");
+                potentialMatches[2].append(puzzle[line][element - letters]);
             }
-            if(matchIsWithinBoundsDownwards(line,word)){
-                potentialMatchDownwardsPositions.append("(").append(element).append(",").append(line + letters).append(")").append(",");
-                potentialMatchDownwards.append(puzzle[line + letters][element]);
+            if(canBeDownwards){
+                potentialMatches[5].append("(").append(element).append(",").append(line + letters).append(")").append(",");
+                potentialMatches[4].append(puzzle[line + letters][element]);
             }
-            if(matchIsWithinBoundsUpwards(line,word)){
-                potentialMatchUpwardsPositions.append("(").append(element).append(",").append(line - letters).append(")").append(",");
-                potentialMatchUpwards.append(puzzle[line - letters][element]);
+            if(canBeUpwards){
+                potentialMatches[7].append("(").append(element).append(",").append(line - letters).append(")").append(",");
+                potentialMatches[6].append(puzzle[line - letters][element]);
             }
-            if(matchIsWithinBoundsDownwards(line, word) && matchIsWithinBoundsForward(line, element,word )){
-                potentialMatchDownDiagonalPositions.append("(").append(line + letters).append(",").append(letters + element).append(")").append(",");
-                potentialMatchDownDiagonal.append(puzzle[line + letters][letters + element]);
+            if(canBeDownwards && canBeForward){
+                potentialMatches[9].append("(").append(line + letters).append(",").append(letters + element).append(")").append(",");
+                potentialMatches[8].append(puzzle[line + letters][letters + element]);
             }
-            if(matchIsWithinBoundsUpwards(line, word) && matchIsWithinBoundsBackwards(element,word)){
-                potentialMatchUpDiagonalPositions.append("(").append(line - letters).append(",").append(element - letters).append(")").append(",");
-                potentialMatchUpDiagonal.append(puzzle[line - letters][element - letters]);
+            if(canBeUpwards && canBeBackwards){
+                potentialMatches[11].append("(").append(line - letters).append(",").append(element - letters).append(")").append(",");
+                potentialMatches[10].append(puzzle[line - letters][element - letters]);
             }
         }
-        if(potentialMatchForward.toString().equals(word)){
-            return formatOutput(potentialMatchForward, potentialMatchForwardPositions);
-        }
-        if(potentialMatchBackwards.toString().equals(word)){
-            return formatOutput(potentialMatchBackwards, potentialMatchBackwardsPositions);
-        }
-        if(potentialMatchDownwards.toString().equals(word)){
-            return formatOutput(potentialMatchDownwards, potentialMatchDownwardsPositions);
-        }
-        if(potentialMatchUpwards.toString().equals(word)){
-            return formatOutput(potentialMatchUpwards, potentialMatchUpwardsPositions);
-        }
-        if(potentialMatchDownDiagonal.toString().equals(word)){
-            return  formatOutput(potentialMatchDownDiagonal, potentialMatchDownDiagonalPositions);
-        }
-        if(potentialMatchUpDiagonal.toString().equals(word)){
-            return  formatOutput(potentialMatchUpDiagonal, potentialMatchUpDiagonalPositions);
+        for(int possibilities = 0; possibilities < potentialMatches.length; ++possibilities){
+            if(potentialMatches[possibilities].toString().equals(word)){
+                return formatOutput(potentialMatches[possibilities], potentialMatches[possibilities + 1]);
+            }
         }
         return "";
+    }
+
+    private StringBuilder[] initializedIndexesForAllPossibleMatches() {
+        StringBuilder[] allPossible = new StringBuilder[12];
+        for(int possibilities = 0; possibilities < 12; ++possibilities){
+            allPossible[possibilities] = new StringBuilder();
+        }
+        return allPossible;
     }
 
     private String formatOutput(StringBuilder potentialMatchForward, StringBuilder potentialMatchForwardPositions) {
