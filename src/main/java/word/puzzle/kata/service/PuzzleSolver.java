@@ -33,6 +33,7 @@ public class PuzzleSolver {
     private String checkIfEquals(int line, int element, String word) {
         StringBuilder potentialMatchBackwards = new StringBuilder();
         StringBuilder potentialMatchForward = new StringBuilder();
+        StringBuilder potentialMatchDownwards = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
                 int targetForward = letters + element;
@@ -42,12 +43,29 @@ public class PuzzleSolver {
                 int targetBack = element - letters;
                 potentialMatchBackwards.append(puzzle[line][targetBack]);
             }
+            if(matchIsWithinBoundsDownwards(line,word)){
+                int targetDownward = line + letters;
+                potentialMatchDownwards.append(puzzle[targetDownward][element]);
+            }
         }
         if(potentialMatchForward.toString().equals(word)
-                || potentialMatchBackwards.toString().equals(word)) {
+                || potentialMatchBackwards.toString().equals(word)){
             return buildAnswerStatement(element,line,word);
         }
+        if(potentialMatchDownwards.toString().equals(word)){
+            return buildVerticalAnswerStatement(element,line,word);
+        }
         return "";
+    }
+
+    private String buildVerticalAnswerStatement(int element, int line, String word) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(word).append(": ");
+        for (int charInWord = 1; charInWord <= word.length(); ++charInWord) {
+            builder.append("(").append(line + (charInWord - 1)).append(",").append(element).append(")");
+            if (charInWord != word.length()) builder.append(",");
+        }
+        return builder.toString();
     }
 
     private String buildAnswerStatement(int element, int line, String word) {
@@ -87,5 +105,13 @@ public class PuzzleSolver {
         } else {
             return false;
         }
+    }
+
+
+    private boolean matchIsWithinBoundsDownwards(int line, String word) {
+        if(word.length() > puzzle.length + line){
+            return false;
+        }
+        return true;
     }
 }
