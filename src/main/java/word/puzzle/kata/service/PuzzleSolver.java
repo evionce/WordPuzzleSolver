@@ -66,6 +66,10 @@ public class PuzzleSolver {
                 potentialMatches[13].append("(").append(line - letters).append(",").append(element + letters).append(")").append(",");
                 potentialMatches[12].append(puzzle[line - letters][element + letters]);
             }
+            if(canBeDownwards && canBeBackwards){
+                potentialMatches[15].append("(").append(line + letters).append(",").append(element - letters).append(")").append(",");
+                potentialMatches[14].append(puzzle[line + letters][element - letters]);
+            }
         }
         for(int possibilities = 0; possibilities < potentialMatches.length; ++possibilities){
             if(potentialMatches[possibilities].toString().equals(word)){
@@ -76,8 +80,8 @@ public class PuzzleSolver {
     }
 
     private StringBuilder[] initializedIndexesForAllPossibleMatches() {
-        StringBuilder[] allPossible = new StringBuilder[14];
-        for(int possibilities = 0; possibilities < 14; ++possibilities){
+        StringBuilder[] allPossible = new StringBuilder[16];
+        for(int possibilities = 0; possibilities < 16; ++possibilities){
             allPossible[possibilities] = new StringBuilder();
         }
         return allPossible;

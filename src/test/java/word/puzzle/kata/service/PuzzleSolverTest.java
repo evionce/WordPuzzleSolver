@@ -110,4 +110,12 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","X","X","A"},{"X","X","T","X"},{"X","A","X","X"},{"K","X","X","X"}},wordsToFind);
         assertEquals("KATA: (3,0),(2,1),(1,2),(0,3)",solver.solvePuzzle());
     }
+
+    @Test
+    public void whenPuzzleWithDiagonalDownwardRightPrintLineWillSignifyTherePosition(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("JAVA");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","X","X","J"},{"X","X","A","X"},{"X","V","X","X"},{"A","X","X","X"}},wordsToFind);
+        assertEquals("JAVA: (0,3),(1,2),(2,1),(3,0)",solver.solvePuzzle());
+    }
 }
