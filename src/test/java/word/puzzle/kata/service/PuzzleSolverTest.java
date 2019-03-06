@@ -57,7 +57,7 @@ public class PuzzleSolverTest {
         wordsToFind.add("HI");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","H","J","A","V","A"}},wordsToFind);
-        assertEquals("HI: (0,0),(0,1)"+"\n"+"JAVA: (0,4),(0,5),(0,6),(0,7)",solver.solvePuzzle());
+        assertEquals("HI: (1,0),(0,0)"+"\n"+"JAVA: (4,0),(5,0),(6,0),(7,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -66,6 +66,6 @@ public class PuzzleSolverTest {
         wordsToFind.add("ABLE");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"J","A","V","A"},{"X","B","X","X"},{"X","L","X","X"},{"X","E","X","X"}},wordsToFind);
-        assertEquals("ABLE: (0,1),(1,1),(2,1),(3,1)"+"\n"+"JAVA: (0,0),(0,1),(0,2),(0,3)",solver.solvePuzzle());
+        assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"+"JAVA: (0,0),(1,0),(2,0),(3,0)",solver.solvePuzzle());
     }
 }

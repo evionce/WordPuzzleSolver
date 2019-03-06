@@ -22,8 +22,9 @@ public class PuzzleSolver {
     public String solvePuzzleAgainstWord(String word) {
         for(int line = 0; line < puzzle.length; ++line){
             for(int element = 0; element < puzzle[line].length; ++element){
-                if(!checkIfEquals(line, element,word).equals("")){
-                    return checkIfEquals(line, element,word);
+                String result = checkIfEquals(line, element,word);
+                if(!result.equals("")){
+                    return result;
                 }
             }
         }
@@ -32,59 +33,38 @@ public class PuzzleSolver {
 
     private String checkIfEquals(int line, int element, String word) {
         StringBuilder potentialMatchBackwards = new StringBuilder();
+        StringBuilder potentialMatchBackwardsPositions = new StringBuilder();
         StringBuilder potentialMatchForward = new StringBuilder();
+        StringBuilder potentialMatchForwardPositions = new StringBuilder();
         StringBuilder potentialMatchDownwards = new StringBuilder();
+        StringBuilder potentialMatchDownwardsPositions = new StringBuilder();
         for(int letters = 0; letters < word.length(); ++letters){
             if(matchIsWithinBoundsForward(line,element,word)){
-                int targetForward = letters + element;
-                potentialMatchForward.append(puzzle[line][targetForward]);
+                potentialMatchForwardPositions.append("(").append(letters + element).append(",").append(line).append(")").append(",");
+                potentialMatchForward.append(puzzle[line][letters + element]);
             }
             if(matchIsWithinBoundsBackwards(element,word)){
-                int targetBack = element - letters;
-                potentialMatchBackwards.append(puzzle[line][targetBack]);
+                potentialMatchBackwardsPositions.append("(").append(element - letters).append(",").append(line).append(")").append(",");
+                potentialMatchBackwards.append(puzzle[line][element - letters]);
             }
             if(matchIsWithinBoundsDownwards(line,word)){
-                int targetDownward = line + letters;
-                potentialMatchDownwards.append(puzzle[targetDownward][element]);
+                potentialMatchDownwardsPositions.append("(").append(element).append(",").append(line + letters).append(")").append(",");
+                potentialMatchDownwards.append(puzzle[line + letters][element]);
             }
         }
-        if(potentialMatchForward.toString().equals(word)
-                || potentialMatchBackwards.toString().equals(word)){
-            return buildAnswerStatement(element,line,word);
+        if(potentialMatchForward.toString().equals(word)){
+            String match = potentialMatchForward.append(": ").append(potentialMatchForwardPositions).toString();
+            return match.substring(0, match.length() -1);
+        }
+        if(potentialMatchBackwards.toString().equals(word)){
+            String backwardMatch = potentialMatchBackwards.append(": ").append(potentialMatchBackwardsPositions).toString();
+            return backwardMatch.substring(0, backwardMatch.length() -1);
         }
         if(potentialMatchDownwards.toString().equals(word)){
-            return buildVerticalAnswerStatement(element,line,word);
+            String match = potentialMatchDownwards.append(": ").append(potentialMatchDownwardsPositions).toString();
+            return match.substring(0, match.length() -1);
         }
         return "";
-    }
-
-    private String buildVerticalAnswerStatement(int element, int line, String word) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(word).append(": ");
-        for (int charInWord = 1; charInWord <= word.length(); ++charInWord) {
-            builder.append("(").append(line + (charInWord - 1)).append(",").append(element).append(")");
-            if (charInWord != word.length()) builder.append(",");
-        }
-        return builder.toString();
-    }
-
-    private String buildAnswerStatement(int element, int line, String word) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(word).append(": ");
-        int elementZero = 0;
-        for(int charInWord = 1; charInWord <= word.length(); ++charInWord){
-            builder.append("(");
-            builder.append(line);
-            builder.append(",");
-            if(element ==1){
-                builder.append(charInWord -1 +elementZero);
-            }else{
-                builder.append(charInWord -1 +element);
-            }
-            builder.append(")");
-            if(charInWord != word.length()) builder.append(",");
-        }
-        return builder.toString();
     }
 
     private boolean matchIsWithinBoundsForward(int line, int element,String word) {
