@@ -102,4 +102,12 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"A","X","X","X"},{"X","T","X","X"},{"X","X","A","X"},{"X","X","X","K"}},wordsToFind);
         assertEquals("KATA: (3,3),(2,2),(1,1),(0,0)",solver.solvePuzzle());
     }
+
+    @Test
+    public void whenPuzzleWithDiagonalUpwardRightPrintLineWillSignifyTherePosition(){
+        List<String> wordsToFind = new ArrayList<>();
+        wordsToFind.add("KATA");
+        PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","X","X","A"},{"X","X","T","X"},{"X","A","X","X"},{"K","X","X","X"}},wordsToFind);
+        assertEquals("KATA: (3,0),(2,1),(1,2),(0,3)",solver.solvePuzzle());
+    }
 }
