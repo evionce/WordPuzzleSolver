@@ -15,7 +15,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HI");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","H","I"},{"X","X","X"},{"X","X","X"},{"X","X","X"}},wordsToFind);
-        assertTrue(solver.solvePuzzleByEachWord().contains("HI"));
+        assertTrue(solver.solvePuzzle().contains("HI"));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HI");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X"},{"X","X","X"},{"X","X","X"}},wordsToFind);
-        assertTrue(solver.solvePuzzleByEachWord().contains("HI"));
+        assertTrue(solver.solvePuzzle().contains("HI"));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("HELLO");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","H","E","L","L","O"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"}},wordsToFind);
-        assertTrue(solver.solvePuzzleByEachWord().contains("HELLO"));
+        assertTrue(solver.solvePuzzle().contains("HELLO"));
     }
 
     @Test
@@ -39,7 +39,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","A","V","A","J"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"}},wordsToFind);
-        assertTrue(solver.solvePuzzleByEachWord().contains("JAVA"));
+        assertTrue(solver.solvePuzzle().contains("JAVA"));
     }
 
     @Test
@@ -48,7 +48,7 @@ public class PuzzleSolverTest {
         wordsToFind.add("HI");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","J","A","V","A"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"}},wordsToFind);
-        assertTrue(solver.solvePuzzleByEachWord().contains("HI"));
+        assertTrue(solver.solvePuzzle().contains("HI"));
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PuzzleSolverTest {
         wordsToFind.add("HI");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"I","H","X","J","A","V","A"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"},{"X","X","X","X","X","X","X"}},wordsToFind);
-        assertEquals("HI: (1,0),(0,0)"+"\n"+"JAVA: (3,0),(4,0),(5,0),(6,0)",solver.solvePuzzleByEachWord());
+        assertEquals("HI: (1,0),(0,0)"+"\n"+"JAVA: (3,0),(4,0),(5,0),(6,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class PuzzleSolverTest {
         wordsToFind.add("ABLE");
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"J","A","V","A"},{"X","B","X","X"},{"X","L","X","X"},{"X","E","X","X"}},wordsToFind);
-        assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"+"JAVA: (0,0),(1,0),(2,0),(3,0)",solver.solvePuzzleByEachWord());
+        assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"+"JAVA: (0,0),(1,0),(2,0),(3,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -78,7 +78,7 @@ public class PuzzleSolverTest {
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"J","A","V","A"},{"X","B","X","T"},{"X","L","X","A"},{"X","E","X","K"}},wordsToFind);
         assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"
                 +"JAVA: (0,0),(1,0),(2,0),(3,0)"+"\n"
-                +"KATA: (3,3),(3,2),(3,1),(3,0)",solver.solvePuzzleByEachWord());
+                +"KATA: (3,3),(3,2),(3,1),(3,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class PuzzleSolverTest {
         assertEquals("ABLE: (1,0),(1,1),(1,2),(1,3)"+"\n"
                 +"JAVA: (0,0),(1,0),(2,0),(3,0)"+"\n"
                 +"KATA: (3,3),(3,2),(3,1),(3,0)"+"\n"
-                +"JBAK: (0,0),(1,1),(2,2),(3,3)",solver.solvePuzzleByEachWord());
+                +"JBAK: (0,0),(1,1),(2,2),(3,3)",solver.solvePuzzle());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("KATA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"A","X","X","X"},{"X","T","X","X"},{"X","X","A","X"},{"X","X","X","K"}},wordsToFind);
-        assertEquals("KATA: (3,3),(2,2),(1,1),(0,0)",solver.solvePuzzleByEachWord());
+        assertEquals("KATA: (3,3),(2,2),(1,1),(0,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("KATA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","X","X","A"},{"X","X","T","X"},{"X","A","X","X"},{"K","X","X","X"}},wordsToFind);
-        assertEquals("KATA: (0,3),(1,2),(2,1),(3,0)",solver.solvePuzzleByEachWord());
+        assertEquals("KATA: (0,3),(1,2),(2,1),(3,0)",solver.solvePuzzle());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class PuzzleSolverTest {
         List<String> wordsToFind = new ArrayList<>();
         wordsToFind.add("JAVA");
         PuzzleSolver solver = new PuzzleSolver(new String[][]{{"X","X","X","J"},{"X","X","A","X"},{"X","V","X","X"},{"A","X","X","X"}},wordsToFind);
-        assertEquals("JAVA: (3,0),(2,1),(1,2),(0,3)",solver.solvePuzzleByEachWord());
+        assertEquals("JAVA: (3,0),(2,1),(1,2),(0,3)",solver.solvePuzzle());
     }
 
     @Test
@@ -151,7 +151,7 @@ public class PuzzleSolverTest {
                 +"SCOTTY: (0,5),(1,5),(2,5),(3,5),(4,5),(5,5)"+"\n"
                 +"SPOCK: (2,1),(3,2),(4,3),(5,4),(6,5)"+"\n"
                 +"SULU: (3,3),(2,2),(1,1),(0,0)"+"\n"
-                +"UHURA: (4,0),(3,1),(2,2),(1,3),(0,4)",solver.solvePuzzleByEachWord());
+                +"UHURA: (4,0),(3,1),(2,2),(1,3),(0,4)",solver.solvePuzzle());
     }
 }
 

@@ -19,7 +19,7 @@ public class PuzzleSolver {
     StringBuilder[] potentialMatches;
 
 
-    public String solvePuzzleByEachWord(){
+    public String solvePuzzle(){
         String results = "";
         for(String word: wordsToFind){
             results += (solvePuzzleAgainstWord(word)+ "\n");

@@ -3,6 +3,7 @@ package word.puzzle.kata.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
+import word.puzzle.kata.KataAppRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class PuzzleParserTest {
     public void setup() {
         puzzleParser = new PuzzleParser();
         wordsToFind = new ArrayList<>();
+        ReflectionTestUtils.setField(puzzleParser, "appRunner", new KataAppRunner());
         ReflectionTestUtils.setField(puzzleParser, "puzzleSize", 2);
         ReflectionTestUtils.setField(puzzleParser, "puzzle", new String[3][3]);
         setField(puzzleParser, "puzzlePath", System.getProperty("user.dir"));
@@ -29,12 +31,12 @@ public class PuzzleParserTest {
 
     @Test
     public void whenPuzzleFilePathIsPassedFileExistsInMemory() throws Exception {
-        assertThat(puzzleParser.readPuzzleFile().exists());
+        assertThat(puzzleParser.parseAndSolvePuzzle().exists());
     }
 
     @Test
     public void whenPuzzleIsReadWordsToFindAreAvailable() throws Exception {
-        puzzleParser.readPuzzleFile();
+        puzzleParser.parseAndSolvePuzzle();
         List wordsToFind = (List) getField(puzzleParser, "wordsToFind");
         assertThat(Objects.equals(wordsToFind, "BONES"));
     }
@@ -70,7 +72,7 @@ public class PuzzleParserTest {
 
     @Test
     public void whenPuzzleFileIsParsedClassIsCreatedWithItsContents() throws Exception{
-        puzzleParser.readPuzzleFile();
+        puzzleParser.parseAndSolvePuzzle();
         PuzzleSolver solver = (PuzzleSolver) getField(puzzleParser, "solver");
         assertEquals("U", solver.getPuzzle()[0][0]);
         assertEquals("G", solver.getPuzzle()[1][14]);

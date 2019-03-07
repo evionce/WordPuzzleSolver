@@ -1,36 +1,32 @@
 package word.puzzle.kata.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import word.puzzle.kata.KataAppRunner;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-/** This class will parse puzzle and dispatch load to be solved **/
+@Component
 public class PuzzleParser {
 
-    /** Configurable for puzzle file path **/
-    @Value("${puzzle.path}") private String puzzlePath;
-    /** Configurable for puzzle file name @ configurable file path **/
+    private String puzzlePath = System.getProperty("user.dir") + "/";
     @Value("${puzzle.file.name}") private String puzzleFileName;
 
-    /** Class to be constructed with sorted puzzle and puzzle answers **/
+    @Autowired KataAppRunner appRunner;
     PuzzleSolver solver;
-    /** 2d array representing puzzle matrix **/
     String[][] puzzle;
-    /** Words to find in the above **/
     List<String> wordsToFind = new ArrayList<>();
 
-    /** After header (words to find) this is set to represent the size of puzzle square **/
     int puzzleSize = 1;
-
-    /** this is to determine when to construct the PuzzleSolver with sorted results **/
     private boolean isFirstRead = true;
 
-    /** This method will pickup a file, extract puzzle answers, and extract puzzle  **/
-    public File readPuzzleFile() throws IOException {
+    public File parseAndSolvePuzzle() throws IOException {
         File puzzleProblemFile = new File(puzzlePath + puzzleFileName);
         BufferedReader reader = extractWordsToFind(puzzleProblemFile);
         extractPuzzleBody(reader);
+        appRunner.setResultFormatted(solver.solvePuzzle());
         return puzzleProblemFile;
     }
 
