@@ -1,6 +1,5 @@
 package word.puzzle.kata.service;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
@@ -53,11 +52,11 @@ public class PuzzleSolver {
                 potentialMatches[1].append("(").append(letters + elementSearching).append(",").append(lineSearching).append(")").append(",");
                 potentialMatches[0].append(puzzle[lineSearching][letters + elementSearching]);
                 if(canBeDownwards){
-                    potentialMatches[3].append("(").append(lineSearching + letters).append(",").append(letters + elementSearching).append(")").append(",");
+                    potentialMatches[3].append("(").append(letters + elementSearching).append(",").append(lineSearching + letters).append(")").append(",");
                     potentialMatches[2].append(puzzle[lineSearching + letters][letters + elementSearching]);
                 }
                 if(canBeUpwards){
-                    potentialMatches[5].append("(").append(lineSearching - letters).append(",").append(elementSearching + letters).append(")").append(",");
+                    potentialMatches[5].append("(").append(elementSearching + letters).append(",").append(lineSearching - letters).append(")").append(",");
                     potentialMatches[4].append(puzzle[lineSearching - letters][elementSearching + letters]);
                 }
             }
@@ -65,11 +64,11 @@ public class PuzzleSolver {
                 potentialMatches[7].append("(").append(elementSearching - letters).append(",").append(lineSearching).append(")").append(",");
                 potentialMatches[6].append(puzzle[lineSearching][elementSearching - letters]);
                 if(canBeUpwards){
-                    potentialMatches[9].append("(").append(lineSearching - letters).append(",").append(elementSearching - letters).append(")").append(",");
+                    potentialMatches[9].append("(").append(elementSearching - letters).append(",").append(lineSearching - letters).append(")").append(",");
                     potentialMatches[8].append(puzzle[lineSearching - letters][elementSearching - letters]);
                 }
                 if(canBeDownwards){
-                    potentialMatches[11].append("(").append(lineSearching + letters).append(",").append(elementSearching - letters).append(")").append(",");
+                    potentialMatches[11].append("(").append(elementSearching - letters).append(",").append(lineSearching + letters).append(")").append(",");
                     potentialMatches[10].append(puzzle[lineSearching + letters][elementSearching - letters]);
                 }
             }
@@ -139,8 +138,8 @@ public class PuzzleSolver {
 
     private boolean matchIsWithinBoundsDownwards(String word) {
         int wordLength = word.length();
-        int potentialUp = lineSearching + puzzle.length;
-        if(wordLength >= potentialUp){
+        int potentialDown = lineSearching + wordLength;
+        if(puzzle.length >= potentialDown){
             return true;
         }else {
             return false;
